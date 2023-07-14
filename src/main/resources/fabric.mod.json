@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "easytweak",
+  "version": "${version}",
+  "name": "Easy Tweak",
+  "description": "",
+  "authors": [],
+  "contact": {
+
+  },
+  "license": "MIT",
+  "icon": "assets/easytweak/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.dearxuan.easytweak.EntryPoint.Main"
+    ],
+    "fabric-datagen": [
+      "com.dearxuan.easytweak.DataGeneration.DataGenerationEntrypoint"
+    ]
+  },
+  "mixins": [
+    "easygame.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "*"
+  }
+}
