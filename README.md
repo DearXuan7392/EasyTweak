@@ -8,7 +8,7 @@ and some optional feature
 
 **Restart when you modify configuration file: ``easytweak.json``**
 
-> If you have any other features you would like to implement, please contact me. Only server side.
+> If you need any other features, please contact me. Only server side.
 
 ## Recipes
 
