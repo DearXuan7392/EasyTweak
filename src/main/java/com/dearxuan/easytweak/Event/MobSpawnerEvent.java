@@ -34,7 +34,6 @@ public class MobSpawnerEvent {
                     ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
                 }
             }
-
         }
     }
 }

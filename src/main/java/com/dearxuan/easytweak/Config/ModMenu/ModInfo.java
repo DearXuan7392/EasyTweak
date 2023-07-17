@@ -6,11 +6,15 @@ import java.nio.file.Path;
 
 public class ModInfo {
 
+    public final static boolean DEBUG = true;
+
     public static String ModName;
 
     public static String ModId;
 
     public static Class ConfigClass;
+
+    public static String PackageName;
 
     public static Logger LOGGER;
 
@@ -19,11 +23,10 @@ public class ModInfo {
     public static void Init(String ModName, String ModId, Class ConfigClass) {
         ModInfo.ModName = ModName;
         ModInfo.ModId = ModId;
-        ConfigurationFilePath = FabricLoader.getInstance().getConfigDir().toAbsolutePath().resolve(ModId + ".json");
+        ModInfo.PackageName = "com.dearxuan." + ModId;
+        ConfigurationFilePath = FabricLoader.getInstance().getConfigDir().toAbsolutePath().resolve(ModId + ".yml");
         ModInfo.LOGGER = new Logger(ModName);
-        ModInfo.LOGGER.info("-------------Easy Hopper Start-------------");
         ModSaver.InitModConfig(ConfigClass);
-        ModInfo.LOGGER.info("-------------Easy Hopper  End -------------");
     }
 
     public static Object getInstance() throws NoSuchFieldException, IllegalAccessException {

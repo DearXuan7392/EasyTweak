@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin;
+package com.dearxuan.easytweak.mixin.StackableItem;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

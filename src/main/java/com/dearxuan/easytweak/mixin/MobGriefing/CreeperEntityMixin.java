@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin;
+package com.dearxuan.easytweak.mixin.MobGriefing;
 
 import net.minecraft.client.render.entity.feature.SkinOverlayOwner;
 import net.minecraft.entity.EntityType;

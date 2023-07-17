@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.Spawner;
+package com.dearxuan.easytweak.mixin.BetterSpawner;
 
 import com.dearxuan.easytweak.Event.MobSpawnerEvent;
 import net.minecraft.block.BlockState;
@@ -51,8 +51,7 @@ public abstract class SpawnEggItemMixin extends Item {
             BlockState blockState = world.getBlockState(blockPos);
             if (blockState.isOf(Blocks.SPAWNER)) {
                 BlockEntity blockEntity = world.getBlockEntity(blockPos);
-                if (blockEntity instanceof MobSpawnerBlockEntity) {
-                    MobSpawnerBlockEntity mobSpawnerBlockEntity = (MobSpawnerBlockEntity)blockEntity;
+                if (blockEntity instanceof MobSpawnerBlockEntity mobSpawnerBlockEntity) {
                     // 丢出刷怪蛋
                     if(!context.getPlayer().isCreative()){
                         MobSpawnerEvent.DropEgg(world, blockPos, mobSpawnerBlockEntity);

@@ -6,8 +6,6 @@ import net.fabricmc.api.ModInitializer;
 
 public class Main implements ModInitializer {
 
-    public static boolean DEBUG = false;
-
     @Override
     public void onInitialize() {
         new LootTable();

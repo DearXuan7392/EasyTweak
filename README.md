@@ -1,155 +1,170 @@
 ## Easy Tweak
 
-Just two recipes...
-
-and some optional feature
+There some optional features.
 
 **Only server needs to install**
 
 **Restart when you modify configuration file: ``easytweak.json``**
 
-> If you need any other features, please contact me. Only server side.
+> If you need any other features, please contact me. Only server-side.
 
-## Recipes
+## MobGriefing
 
-1. 8 × **Block of Golden** + 1 × **Apple**  ==>  **Enchanted Golden Apple**
-2. 4 × **Block of Amethyst**  ==> **Budding Amethyst**
-
-## Optional
-
-### Spawn Zombified Piglin
-
-Will nether portal spawn zombified piglin
+### Disable Enderman Pick Up
 
 ``` yaml
-NETHER_PORTAL_NEVER_SPAWN_ZOMBIE_PIGLIN = true
+Disable_Enderman_Pick_Up = false
 ```
 
-### Ender Man Pick Up
-
-Can ender man pick up block
+### Disable Creeper Griefing
 
 ``` yaml
-ENDER_MAN_PICK_UP = true
+Disable_Creeper_Griefing = false
 ```
 
-### Creeper Destroy Block
-
-Can creeper destroy block
+### Disable Ghast Griefing
 
 ``` yaml
-CREEPER_DESTROY_BLOCK = true
+Disable_Ghast_Griefing = false
 ```
 
-### Spawn Bat
+## GameRule
 
-Can bat spawn in the world
+### Disable Nether Portal Spawning Zombified Piglin
 
 ``` yaml
-SPAWN_BAT = true
+Disable_Nether_Portal_Spawning_Zombified_Piglin = false
 ```
 
-### Spawn Ghast
-
-Can ghast spawn above bedrock(y >= 128) in nether
+### Disable Bat Spawning
 
 ``` yaml
-SPAWN_GHAST_WHEN_Y_GREATER_128 = true
+Disable_Bat_Spawning = false
 ```
 
-### Ghast Destroy Block
+### Disable Ghast Spawning Above Bedrock
 
-Can ghast destroy block
+Disable ghast spawning above bedrock(y >= 128) in nether
 
 ``` yaml
-GHAST_DESTROY_BLOCK = true
+Disable_Ghast_Spawning_Above_Bedrock = false
 ```
 
-### No Trample
+### Disable Trample
 
 Don't trample farmland
 
 ``` yaml
-NO_TRAMPLE = false
+Disable_Trample = false
 ```
 
-### Better Spawner
+### Player Head
 
-There some features bellow:
-
-1. Spawners can be mined, but they no longer drop XP. Instead, they drop the mob egg inside.
-
-2. Right-clicking a spawner with a mob egg will replace the original egg with the one in your hand, and the original mob egg will drop.
-
-3. Placing a torch or soul torch on the spawner will disable it.
-
-4. When a spawner receive redstone power, it will continuously spawn mobs regardless of player proximity. If mobs are not spawning for a long time, please check if the area around the spawner meets the spawning requirements.
-
-5. There is a chance for mobs to drop its egg when player kill it. The initial chance is **1%**. "Fortune" enchantment can increase the chance to **5%**, **10%**, **15%**. *(5% × level)*
+Getting player head by killing him/her
 
 ``` yaml
-BETTER_MOB_SPAWNER = false
+Drop_Player_Head = false
 ```
 
-### Spawner Player Range (Needs: Better Spawner)
+### Fast Budding Amethyst
 
-Only player entry the range can the spawner working
+Increase the growth speed by 10 times
+
+``` yaml
+Fast_Budding_Amethyst = false
+```
+
+### Superb Medical Skills
+
+Only needs **4 ~ 10** second to save a zombie villager
+
+``` yaml
+Superb_Medical_Skill = false
+```
+
+## BetterSpawner
+
+### Enable
+
+Only when this item is set to ``true``, will the other modifications take effect
+
+The following features will take effect immediately:
+
+1. Spawners can be mined, but they no longer drop XP. Instead, they drop the spawn egg inside;
+
+2. Right-clicking a spawner with a spawn egg will replace the original spawn egg with the one in your hand, and the spawn egg inside will drop;
+
+3. Placing a torch or soul torch on the spawner will disable it;
+
+4. When a spawner receive redstone power, it will continuously spawn mobs regardless of player proximity;
+
+5. There is a chance for mobs to drop their spawn egg when player kill him. The initial chance is **1%**. "Fortune" enchantment can increase the chance to **5%**, **10%**, **15%**. *(5% × level)*;
+
+```yaml
+Enable = false
+```
+
+### Player Range
+
+Only players entry the range can the spawner working
 
 **When spawner receive redstone power, it will ignore the range**
 
 ``` yaml
-SPAWNER_PLAYER_RANGE = 16
+Player_Range = 16
 ```
 
-### Spawner Max Nearby (Needs: Better Spawner)
+### Max Nearby
 
-If the number of mob exceeds the limit, spawner will stop working
+If the number of mobs exceeds the limit, spawner will stop working
 
 ``` yaml
-SPAWNER_MAX_NEARBY = 6
+Max_Nearby = 6
 ```
 
-### Min Spawn Delay (Needs: Better Spawner)
+### Min Delay
 
-Min time between two spawns
+Min delay between two spawns
 
 ``` yaml
-SPAWNER_MIN_DELAY = 200
+Min_Delay = 200
 ```
 
-### Max Spawn Delay (Needs: Better Spawner)
+### Max Delay
 
-Max time between two spawns
+Max delay between two spawns
 
 ``` yaml
-SPAWNER_MAX_DELAY = 800
+Max_Delay = 800
 ```
 
-### Spawner Range (Needs: Better Spawner)
+### Spawner Range (Width)
 
-The mob will spawn in this range
+Mobs will spawn in this range
 
 ``` yaml
-SPAWNER_RANGE = 8
+Spawner_Range = 8
 ```
 
 ### Spawner Height (Developing)
 
-The mob will spawn in this height
+Mobs will spawn in this height
 
 ``` yaml
-SPAWNER_HEIGHT = 3
+Spawner_Height = 3
 ```
 
-### Spawner Count (Needs: Better Spawner)
+### Spawner Count
 
-The number of mob attempted to spawn each time
+The number of mobs attempted to spawn each time
 
 ``` yaml
-SPAWNER_COUNT = 4
+Spawner_Count = 4
 ```
 
-### Server Tick
+## CommandReg
+
+### Server tick
 
 Using ```/tick``` command, to check the system info, avg tick time and memory used
 
@@ -159,36 +174,46 @@ When you can't see GUI screen, this is a better way to see the avg tick
 TICK_LISTENER = false
 ```
 
-### Player Head
+## StackableItem
 
-Getting player head by killing him/her
+Modify the max stack count to **64** on the server-side.
+
+If client does not have this MOD installed, there may be data inconsistency, but it will be immediately corrected to the server data and will not affect the gameplay.
+
+### Potions
 
 ``` yaml
-PLAYER_HEAD = false
+Potions = false
 ```
 
-### Fast Budding Amethyst
+## LootTable
 
-Increase the growth speed by 10 times
+### Blaze Always Drop Blaze Rod
 
 ``` yaml
-FAST_BUDDING_AMETHYST = false
+Always_Drop_Blaze_Rod = false
 ```
 
-### Superb Medical Skills
-
-Only needs **4 ~ 10** second to save a zombie villager
+### Can Budding Amethyst Be Mined
 
 ``` yaml
-SUPERB_MEDICAL_SKILLS = false
+Mineable_Budding_Amethyst = false
 ```
 
-### Stackable Potions
+## Recipes
 
-Modify the max stack count of potions to **64** on the server side.
+### Enchanted Golden Apple
 
-If player does not have this MOD installed, there may be data inconsistency, but it will be immediately corrected to the server data and will not affect the actual gameplay.
+8 * Gold Block + Apple
 
 ``` yaml
-STACKABLE_POTIONS = false
+Enchanted_Golden_Apple = false
+```
+
+### Budding Amethyst
+
+4 * Amethyst
+
+``` yaml
+Budding_Amethyst = false
 ```

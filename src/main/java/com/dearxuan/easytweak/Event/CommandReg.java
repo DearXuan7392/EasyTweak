@@ -23,7 +23,7 @@ public class CommandReg {
 
     public CommandReg() {
 
-        if (ModConfig.INSTANCE.TICK_LISTENER) {
+        if (ModConfig.INSTANCE.CommandReg.Command_Tick) {
             // 注册 /tick 命令
             CommandRegistrationCallback.EVENT.register(
                     (dispatcher, registryAccess, environment) -> {

@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin;
+package com.dearxuan.easytweak.mixin.MobGriefing;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.AbstractFireballEntity;

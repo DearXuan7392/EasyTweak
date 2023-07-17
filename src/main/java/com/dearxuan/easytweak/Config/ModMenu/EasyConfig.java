@@ -11,4 +11,8 @@ public @interface EasyConfig {
     String max() default "256";
 
     String[] mixin() default {};
+
+    String CommentKey() default "";
+
+    String[] mixinPackage() default {};
 }

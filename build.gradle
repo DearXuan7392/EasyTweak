@@ -29,6 +29,8 @@ dependencies {
 
     // 系统信息
     modImplementation("com.github.oshi:oshi-core:6.4.4")
+    // YAML配置
+    modImplementation("org.yaml:snakeyaml:2.0")
     }
 
 processResources {

@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin;
+package com.dearxuan.easytweak.mixin.MobGriefing;
 
 import net.minecraft.entity.ai.goal.Goal;
 import org.spongepowered.asm.mixin.Mixin;

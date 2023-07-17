@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin;
+package com.dearxuan.easytweak.mixin.GameRule;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;

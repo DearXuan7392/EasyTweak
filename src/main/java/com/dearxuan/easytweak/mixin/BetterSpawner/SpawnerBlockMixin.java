@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.Spawner;
+package com.dearxuan.easytweak.mixin.BetterSpawner;
 
 import com.dearxuan.easytweak.Event.MobSpawnerEvent;
 import com.dearxuan.easytweak.Interface.MobSpawnerInterface;
@@ -41,7 +41,6 @@ public abstract class SpawnerBlockMixin extends BlockWithEntity {
     @Overwrite
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
         super.onStacksDropped(state, world, pos, tool, false);
-
     }
 
     @Override

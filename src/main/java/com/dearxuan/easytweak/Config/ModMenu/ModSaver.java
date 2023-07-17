@@ -1,107 +1,69 @@
 package com.dearxuan.easytweak.Config.ModMenu;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
-import java.util.HashMap;
 
 import static com.dearxuan.easytweak.Config.ModMenu.ModInfo.ConfigClass;
 import static com.dearxuan.easytweak.Config.ModMenu.ModInfo.LOGGER;
 
 public class ModSaver {
 
-    public static HashMap<String, Object> DefaultValue = new HashMap<>();
-
-
     /**
-     * Init mod configuration<br/>
-     * needs fabric api
+     * 初始化Mod信息
      */
     public static void InitModConfig(Class config) {
         try {
             ConfigClass = config;
-            // 获取配置文件类,
-            Field[] fields = ConfigClass.getFields();
-
-            // 创建实例
-            Object defaultConfig = ConfigClass.getDeclaredConstructor().newInstance();
-
-            // 获取默认值
-            for (Field field : fields) {
-                if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-                    try {
-                        DefaultValue.put(field.getName(), field.get(defaultConfig));
-                    } catch (IllegalAccessException e) {
-                        LOGGER.error(e);
-                    }
-                }
-            }
 
             // 尝试读取配置, 若失败, 则使用默认配置
-            if (!ReadConfig()) {
-                ConfigClass.getField("INSTANCE").set(null, defaultConfig);
+            if (!ReadFromYaml()) {
+                ModInfo.setInstance(ConfigClass.getDeclaredConstructor().newInstance());
             }
             // 覆盖原配置文件, 防止mod升级后新增的配置无法写入
-            WriteConfig();
-
-            // 控制台打印配置信息
-            for (Field field : fields) {
-                if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-                    try {
-                        LOGGER.info(field.getName() + ": " + field.get(ModInfo.getInstance()));
-                    } catch (IllegalAccessException e) {
-                        LOGGER.error(e);
-                    }
-                }
-            }
+            WriteToYaml();
         } catch (Exception e) {
             LOGGER.error(e);
         }
     }
 
     /**
-     * Save config file
-     *
-     * @return true if success
+     * 保存配置文件
      */
     public static boolean Save() {
-        return WriteConfig();
+        return WriteToYaml();
     }
 
-    private static boolean WriteConfig() {
+    private static boolean WriteToYaml() {
         try {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            try (FileWriter writer = new FileWriter(ModInfo.ConfigurationFilePath.toFile())) {
-                writer.write(gson.toJson(ModInfo.getInstance()));
-                return true;
-            }
-        } catch (Exception ignored) {
-
-        }
-        return false;
-    }
-
-    private static boolean ReadConfig() {
-        File file = new File(ModInfo.ConfigurationFilePath.toUri());
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            if (file.exists()) {
-                try (BufferedReader reader = Files.newBufferedReader(ModInfo.ConfigurationFilePath)) {
-                    Object modConfig = gson.fromJson(reader, ConfigClass);
-                    ModInfo.setInstance(modConfig);
+            Yaml yaml = new Yaml();
+            String yamlString = yaml.dumpAsMap(ModInfo.getInstance());
+            // 如果配置文件存在且内容相同, 则不写入
+            if(Files.exists(ModInfo.ConfigurationFilePath)){
+                String originalString = new String(Files.readAllBytes(ModInfo.ConfigurationFilePath));
+                if(originalString.equals(yamlString)){
                     return true;
                 }
             }
-        } catch (Exception ignored) {
-
+            FileWriter writer = new FileWriter(ModInfo.ConfigurationFilePath.toFile());
+            writer.write(yamlString);
+            writer.close();
+            return true;
+        } catch (Exception e) {
+            LOGGER.error(e);
+            return false;
         }
-        return false;
     }
 
-
+    private static boolean ReadFromYaml() {
+        try {
+            String yamlString = new String(Files.readAllBytes(ModInfo.ConfigurationFilePath));
+            Yaml yaml = new Yaml();
+            ModInfo.setInstance(yaml.loadAs(yamlString, ConfigClass));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

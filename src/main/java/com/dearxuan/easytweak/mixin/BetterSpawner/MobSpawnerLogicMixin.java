@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.Spawner;
+package com.dearxuan.easytweak.mixin.BetterSpawner;
 
 import com.dearxuan.easytweak.Config.ModConfig;
 import com.dearxuan.easytweak.Interface.MobSpawnerInterface;
@@ -53,12 +53,12 @@ public abstract class MobSpawnerLogicMixin implements MobSpawnerInterface {
             at = @At("RETURN")
     )
     private void OnInit(CallbackInfo info){
-        this.requiredPlayerRange = ModConfig.INSTANCE.SPAWNER_PLAYER_RANGE;
-        this.maxNearbyEntities = ModConfig.INSTANCE.SPAWNER_MAX_NEARBY;
-        this.minSpawnDelay = ModConfig.INSTANCE.SPAWNER_MIN_DELAY;
-        this.maxSpawnDelay = ModConfig.INSTANCE.SPAWNER_MAX_DELAY;
-        this.spawnRange = ModConfig.INSTANCE.SPAWNER_RANGE / 2;
-        this.spawnCount = ModConfig.INSTANCE.SPAWNER_COUNT;
+        this.requiredPlayerRange = ModConfig.INSTANCE.BetterSpawner.Player_Range;
+        this.maxNearbyEntities = ModConfig.INSTANCE.BetterSpawner.Max_Nearby;
+        this.minSpawnDelay = ModConfig.INSTANCE.BetterSpawner.Min_Delay;
+        this.maxSpawnDelay = ModConfig.INSTANCE.BetterSpawner.Max_Delay;
+        this.spawnRange = ModConfig.INSTANCE.BetterSpawner.Spawner_Range / 2;
+        this.spawnCount = ModConfig.INSTANCE.BetterSpawner.Spawner_Count;
     }
 
     @Override
