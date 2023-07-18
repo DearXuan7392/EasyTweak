@@ -1,5 +1,6 @@
 package com.dearxuan.easytweak.mixin.StackableItem;
 
+import com.dearxuan.easytweak.Config.ModConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +19,7 @@ public abstract class StackablePotionMixin {
             index = 0
     )
     private static Item.Settings GetPotionSetting(Item.Settings settings){
-        return settings.maxCount(64);
+        return settings.maxCount(ModConfig.INSTANCE.StackableItem.Potions);
     }
 
     @ModifyArg(
@@ -30,7 +31,7 @@ public abstract class StackablePotionMixin {
             index = 0
     )
     private static Item.Settings GetSplashPotionSetting(Item.Settings settings){
-        return settings.maxCount(64);
+        return settings.maxCount(ModConfig.INSTANCE.StackableItem.Potions);
     }
 
     @ModifyArg(
@@ -42,6 +43,6 @@ public abstract class StackablePotionMixin {
             index = 0
     )
     private static Item.Settings GetLingeringPotionSetting(Item.Settings settings){
-        return settings.maxCount(64);
+        return settings.maxCount(ModConfig.INSTANCE.StackableItem.Potions);
     }
 }

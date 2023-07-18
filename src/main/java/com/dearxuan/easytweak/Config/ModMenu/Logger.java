@@ -10,14 +10,6 @@ public class Logger {
         this.LOGGER = LoggerFactory.getLogger(ModName);
     }
 
-    public void info(String s) {
-        LOGGER.info(s);
-    }
-
-    public void error(String s) {
-        LOGGER.error(s);
-    }
-
     public void error(Exception e) {
         LOGGER.error(e.toString());
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

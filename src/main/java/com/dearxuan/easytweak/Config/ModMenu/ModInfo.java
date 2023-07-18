@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 public class ModInfo {
 
-    public final static boolean DEBUG = true;
+    public final static boolean DEBUG = false;
 
     public static String ModName;
 

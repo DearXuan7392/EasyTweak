@@ -161,7 +161,7 @@ public class ModConfig extends BaseConfig {
          * 药水可堆叠
          */
         @EasyConfig(mixin = "StackablePotionMixin")
-        public boolean Potions = false;
+        public int Potions = 1;
     }
 
     /**

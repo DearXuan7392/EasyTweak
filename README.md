@@ -4,7 +4,7 @@ There some optional features.
 
 **Only server needs to install**
 
-**Restart when you modify configuration file: ``easytweak.json``**
+**Restart when you modify configuration file: ``easytweak.yml``**
 
 > If you need any other features, please contact me. Only server-side.
 
