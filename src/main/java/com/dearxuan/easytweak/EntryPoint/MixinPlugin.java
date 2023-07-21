@@ -1,16 +1,13 @@
 package com.dearxuan.easytweak.EntryPoint;
 
 import com.dearxuan.easytweak.Config.ModConfig;
-import com.dearxuan.easytweak.Config.ModMenu.ConfigDesc;
-import com.dearxuan.easytweak.Config.ModMenu.EasyConfig;
 import com.dearxuan.easytweak.Config.ModMenu.ModInfo;
-import com.dearxuan.easytweak.Config.ModMenu.ModSaver;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 import static com.dearxuan.easytweak.Config.ModMenu.ModInfo.LOGGER;
 
@@ -18,7 +15,12 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        ModInfo.Init("Easy Tweak", "easytweak", ModConfig.class);
+        ModInfo.Init(
+                "Easy Tweak",
+                "easytweak",
+                ModConfig.class,
+                Main.DEBUG);
+
     }
 
     @Override

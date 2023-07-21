@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 public class ModInfo {
 
-    public final static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
     public static String ModName;
 
@@ -20,7 +20,8 @@ public class ModInfo {
 
     public static Path ConfigurationFilePath;
 
-    public static void Init(String ModName, String ModId, Class ConfigClass) {
+    public static void Init(String ModName, String ModId, Class ConfigClass, boolean DEBUG) {
+        ModInfo.DEBUG = DEBUG;
         ModInfo.ModName = ModName;
         ModInfo.ModId = ModId;
         ModInfo.PackageName = "com.dearxuan." + ModId;

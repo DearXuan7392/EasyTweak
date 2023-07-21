@@ -20,7 +20,7 @@
     ]
   },
   "mixins": [
-    "easygame.mixins.json"
+    "easytweak.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

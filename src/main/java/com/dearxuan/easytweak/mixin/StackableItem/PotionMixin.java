@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(Items.class)
-public abstract class StackablePotionMixin {
+public abstract class PotionMixin {
 
     @ModifyArg(
             method = "<clinit>",

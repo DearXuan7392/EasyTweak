@@ -15,9 +15,13 @@ public class ModConfig extends BaseConfig {
 
     public COMMAND_REG CommandReg = new COMMAND_REG();
 
+    public ENCHANTMENT Enchantment = new ENCHANTMENT();
+
     public STACKABLE_ITEM StackableItem = new STACKABLE_ITEM();
 
     public LOOTTABLE LootTable = new LOOTTABLE();
+
+    public MOBACTIVITY MobActivity = new MOBACTIVITY();
 
     public RECIPES Recipes = new RECIPES();
 
@@ -139,6 +143,17 @@ public class ModConfig extends BaseConfig {
          * 每次生成的怪物数量
          */
         public int Spawner_Count = 4;
+
+        /**
+         * 取消光照限制
+         */
+        @EasyConfig(mixin = {"HostileEntityMixin"})
+        public boolean Disable_Light_Restriction = false;
+
+        /**
+         * 取消流体限制
+         */
+        public boolean Disable_Fluid_Restriction = false;
     }
 
     /**
@@ -153,6 +168,42 @@ public class ModConfig extends BaseConfig {
     }
 
     /**
+     * 附魔类
+     */
+    public static class ENCHANTMENT extends BaseConfig {
+
+        /**
+         * 禁用附魔冲突检测
+         */
+        @EasyConfig(mixinPackage = "Enchantment.Conflict")
+        public boolean Disable_Enchantments_Conflict = false;
+
+        /**
+         * 弓的附魔对弩有效
+         */
+        @EasyConfig(mixinPackage = "Enchantment.SharedEnchanting")
+        public boolean Share_Enchantments_To_Crossbow = false;
+
+        /**
+         * 附魔无限的弓和弩不再需要背包中拥有箭, 药水箭也不会减少
+         */
+        @EasyConfig(mixinPackage = "Enchantment.RealInfinity")
+        public boolean Real_Infinity = false;
+
+        /**
+         * 不再出现过于昂贵提示, 附魔最大经验值为39
+         */
+        @EasyConfig(mixin = "AnvilScreenHandlerMixin")
+        public boolean Never_Expensive = false;
+
+        /**
+         * 经验修补直接使用玩家经验对工具修复
+         */
+        @EasyConfig(mixin = "ItemStackMixin")
+        public boolean Better_Mending = false;
+    }
+
+    /**
      * 可堆叠物品类
      */
     public static class STACKABLE_ITEM extends BaseConfig {
@@ -160,8 +211,20 @@ public class ModConfig extends BaseConfig {
         /**
          * 药水可堆叠
          */
-        @EasyConfig(mixin = "StackablePotionMixin")
+        @EasyConfig(mixin = "PotionMixin")
         public int Potions = 1;
+
+        /**
+         * 雪球
+         */
+        @EasyConfig(mixin = "SnowballMixin")
+        public int Snowball = 16;
+
+        /**
+         * 床可堆叠
+         */
+        @EasyConfig(mixin = "BedMixin")
+        public int Bed = 1;
     }
 
     /**
@@ -175,9 +238,38 @@ public class ModConfig extends BaseConfig {
         public boolean Always_Drop_Blaze_Rod = false;
 
         /**
+         * 凋零骷髅死亡时总会凋零凋零骷髅头
+         */
+        public boolean Wither_Skeleton_Drop_Skull = false;
+
+        /**
          * 紫水晶母岩是否可掉落
          */
         public boolean Mineable_Budding_Amethyst = false;
+    }
+
+    /**
+     * 生物行为类
+     */
+    public static class MOBACTIVITY extends BaseConfig {
+
+        /**
+         * 禁止猪灵在主世界变为僵尸猪人
+         */
+        @EasyConfig(mixin = "AbstractPiglinEntityMixin")
+        public boolean Disable_Piglin_Zombify = false;
+
+        /**
+         * 苦力怕主动攻击雪傀儡
+         */
+        @EasyConfig(mixin = "CreeperEntityMixin")
+        public boolean Creeper_Attack_Snow_Golem = false;
+
+        /**
+         * 禁用僵尸破门
+         */
+        @EasyConfig(mixin = "")
+        public boolean Disable_Zombie_Break_Door = false;
     }
 
     public static class RECIPES extends BaseConfig {
@@ -185,17 +277,13 @@ public class ModConfig extends BaseConfig {
         /**
          * 启用附魔金苹果合成配方
          */
-        @EasyConfig(
-                mixinPackage = "Recipe"
-        )
+        @EasyConfig(mixinPackage = "Recipe")
         public boolean Enchanted_Golden_Apple = false;
 
         /**
          * 启用紫水晶母岩合成配方
          */
-        @EasyConfig(
-                mixinPackage = "Recipe"
-        )
+        @EasyConfig(mixinPackage = "Recipe")
         public boolean Budding_Amethyst = false;
     }
 }

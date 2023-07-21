@@ -11,7 +11,7 @@ public class BaseConfig {
 
     public BaseConfig(){}
 
-    private String[] Matchs = null;
+    private transient String[] Matchs = null;
 
     public boolean shouldApply(String mixinClassFullname){
         try{
@@ -31,7 +31,7 @@ public class BaseConfig {
 
     }
 
-    public String[] getAllMatches() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private String[] getAllMatches() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         List<ConfigDesc> configDescList = getConfigDesc();
         HashSet<String> matches = new HashSet<>();
         matches.add(ModInfo.PackageName + ".mixin.Debug.*");
@@ -51,7 +51,7 @@ public class BaseConfig {
         return matches.toArray(new String[]{});
     }
 
-    public List<ConfigDesc> getConfigDesc() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private List<ConfigDesc> getConfigDesc() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         return getConfigDesc(null);
     }
 
@@ -65,15 +65,10 @@ public class BaseConfig {
         for (Field field : fields ) {
             // 排除静态字段和私有字段
             if(!Modifier.isStatic(field.getModifiers()) && !Modifier.isPrivate(field.getModifiers())){
-                switch (field.getType().getName()){
-                    // 仅处理基本类型的配置
-                    case "int", "double", "boolean":
-                        configDescList.add(getConfigDesc(father, field, defaultConfig));
-                        break;
-                    default:
-                        if(BaseConfig.class.isAssignableFrom(field.getType())){
-                            configDescList.addAll(((BaseConfig)field.get(this)).getConfigDesc(field.getName()));
-                        }
+                if(BaseConfig.class.isAssignableFrom(field.getType())){
+                    configDescList.addAll(((BaseConfig)field.get(this)).getConfigDesc(field.getName()));
+                }else {
+                    configDescList.add(getConfigDesc(father, field, defaultConfig));
                 }
             }
 

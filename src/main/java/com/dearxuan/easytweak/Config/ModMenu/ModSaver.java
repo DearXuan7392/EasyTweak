@@ -1,9 +1,17 @@
 package com.dearxuan.easytweak.Config.ModMenu;
 
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.introspector.BeanAccess;
+import org.yaml.snakeyaml.introspector.Property;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.FileWriter;
 import java.nio.file.Files;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.dearxuan.easytweak.Config.ModMenu.ModInfo.ConfigClass;
 import static com.dearxuan.easytweak.Config.ModMenu.ModInfo.LOGGER;
@@ -37,7 +45,9 @@ public class ModSaver {
 
     private static boolean WriteToYaml() {
         try {
-            Yaml yaml = new Yaml();
+            DumperOptions options = new DumperOptions();
+            EasyRepresenter easyRepresenter = new EasyRepresenter(options);
+            Yaml yaml = new Yaml(easyRepresenter);
             String yamlString = yaml.dumpAsMap(ModInfo.getInstance());
             // 如果配置文件存在且内容相同, 则不写入
             if(Files.exists(ModInfo.ConfigurationFilePath)){
@@ -64,6 +74,25 @@ public class ModSaver {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    private static class EasyRepresenter extends Representer {
+
+        public EasyRepresenter(DumperOptions options) {
+            super(options);
+            PropertyUtils propertyUtils = new PropertyUtils(){
+                @Override
+                protected Set<Property> createPropertySet(Class<? extends Object> type, BeanAccess bAccess){
+                    return getPropertiesMap(type, BeanAccess.FIELD)
+                            .values()
+                            .stream()
+                            .sequential()
+                            .filter(property -> property.isReadable() && (isAllowReadOnlyProperties() || property.isWritable()))
+                            .collect(Collectors.toCollection(LinkedHashSet::new));
+                }
+            };
+            setPropertyUtils(propertyUtils);
         }
     }
 }

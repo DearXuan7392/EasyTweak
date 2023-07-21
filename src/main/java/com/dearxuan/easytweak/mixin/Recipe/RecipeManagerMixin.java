@@ -1,6 +1,5 @@
 package com.dearxuan.easytweak.mixin.Recipe;
 
-import com.dearxuan.easytweak.Config.ModMenu.ModInfo;
 import com.dearxuan.easytweak.Event.Recipe;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

@@ -1,5 +1,6 @@
 package com.dearxuan.easytweak.Config.ModMenu;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
 public class Logger {
@@ -18,9 +19,18 @@ public class Logger {
         }
     }
 
-    public void debug(Object o){
+    public void debug(Object ... os){
         if(ModInfo.DEBUG){
-            LOGGER.info(String.valueOf(o));
+            if(os.length == 1){
+                LOGGER.info(String.valueOf(os[0]));
+            }else{
+                String[] s = new String[os.length];
+                for(int i=0;i<os.length;++i){
+                    s[i] = String.valueOf(os[i]);
+                }
+                String result = StringUtils.join(s, ",");
+                LOGGER.info(result);
+            }
         }
     }
 }
