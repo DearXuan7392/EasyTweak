@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,7 +19,7 @@ public abstract class ItemStackMixin implements FabricItemStack {
     @Shadow
     public abstract boolean isDamageable();
 
-    @Shadow @Final private static Logger LOGGER;
+    private int nextAdditionExperience = 1;
 
     /**
      * @author
@@ -63,9 +61,10 @@ public abstract class ItemStackMixin implements FabricItemStack {
                     actualRepair = Math.min(i, player.totalExperience * 2);
                     // 实际修复值 > 0
                     if(actualRepair > 0){
-                        // 如果经验是单数, 为了与原版匹配, 有 50% 的概率扣除额外一点经验
-                        if(actualRepair % 2 == 1 && random.nextBoolean()){
-                            actualRepair += 1;
+                        // 如果经验是单数, 为了与原版匹配, 每两次为奇数时才会扣除一次经验
+                        if(actualRepair % 2 == 1){
+                            actualRepair += nextAdditionExperience;
+                            nextAdditionExperience = -nextAdditionExperience;
                         }
                         // 扣除经验
                         player.addExperience(- ((actualRepair + 1) / 2));

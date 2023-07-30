@@ -150,12 +150,11 @@ public class SafeConstructor extends BaseConstructor {
             SequenceNode sn = (SequenceNode) valueNode;
             List<Node> vals = sn.getValue();
             for (Node subnode : vals) {
-              if (!(subnode instanceof MappingNode)) {
+              if (!(subnode instanceof MappingNode mnode)) {
                 throw new ConstructorException("while constructing a mapping", node.getStartMark(),
                     "expected a mapping for merging, but found " + subnode.getNodeId(),
                     subnode.getStartMark());
               }
-              MappingNode mnode = (MappingNode) subnode;
               mergeNode(mnode, false, key2index, values, forceStringKeys);
             }
             break;
@@ -457,18 +456,16 @@ public class SafeConstructor extends BaseConstructor {
       // Note: we do not check for duplicate keys, because it's too
       // CPU-expensive.
       Map<Object, Object> omap = new LinkedHashMap<Object, Object>();
-      if (!(node instanceof SequenceNode)) {
+      if (!(node instanceof SequenceNode snode)) {
         throw new ConstructorException("while constructing an ordered map", node.getStartMark(),
             "expected a sequence, but found " + node.getNodeId(), node.getStartMark());
       }
-      SequenceNode snode = (SequenceNode) node;
       for (Node subnode : snode.getValue()) {
-        if (!(subnode instanceof MappingNode)) {
+        if (!(subnode instanceof MappingNode mnode)) {
           throw new ConstructorException("while constructing an ordered map", node.getStartMark(),
               "expected a mapping of length 1, but found " + subnode.getNodeId(),
               subnode.getStartMark());
         }
-        MappingNode mnode = (MappingNode) subnode;
         if (mnode.getValue().size() != 1) {
           throw new ConstructorException("while constructing an ordered map", node.getStartMark(),
               "expected a single mapping item, but found " + mnode.getValue().size() + " items",
@@ -490,19 +487,17 @@ public class SafeConstructor extends BaseConstructor {
     public Object construct(Node node) {
       // Note: we do not check for duplicate keys, because it's too
       // CPU-expensive.
-      if (!(node instanceof SequenceNode)) {
+      if (!(node instanceof SequenceNode snode)) {
         throw new ConstructorException("while constructing pairs", node.getStartMark(),
             "expected a sequence, but found " + node.getNodeId(), node.getStartMark());
       }
-      SequenceNode snode = (SequenceNode) node;
       List<Object[]> pairs = new ArrayList<Object[]>(snode.getValue().size());
       for (Node subnode : snode.getValue()) {
-        if (!(subnode instanceof MappingNode)) {
+        if (!(subnode instanceof MappingNode mnode)) {
           throw new ConstructorException("while constructingpairs", node.getStartMark(),
               "expected a mapping of length 1, but found " + subnode.getNodeId(),
               subnode.getStartMark());
         }
-        MappingNode mnode = (MappingNode) subnode;
         if (mnode.getValue().size() != 1) {
           throw new ConstructorException("while constructing pairs", node.getStartMark(),
               "expected a single mapping item, but found " + mnode.getValue().size() + " items",

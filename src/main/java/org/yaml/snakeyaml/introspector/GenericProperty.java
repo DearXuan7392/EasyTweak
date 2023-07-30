@@ -36,8 +36,7 @@ public abstract class GenericProperty extends Property {
 
   public Class<?>[] getActualTypeArguments() { // should we synchronize here ?
     if (!actualClassesChecked) {
-      if (genType instanceof ParameterizedType) {
-        ParameterizedType parameterizedType = (ParameterizedType) genType;
+      if (genType instanceof ParameterizedType parameterizedType) {
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         if (actualTypeArguments.length > 0) {
           actualClasses = new Class<?>[actualTypeArguments.length];
@@ -67,9 +66,8 @@ public abstract class GenericProperty extends Property {
         if (componentType instanceof Class<?>) {
           actualClasses = new Class<?>[] {(Class<?>) componentType};
         }
-      } else if (genType instanceof Class<?>) {// XXX this check is only
+      } else if (genType instanceof Class<?> classType) {// XXX this check is only
         // required for IcedTea6
-        Class<?> classType = (Class<?>) genType;
         if (classType.isArray()) {
           actualClasses = new Class<?>[1];
           actualClasses[0] = getType().getComponentType();

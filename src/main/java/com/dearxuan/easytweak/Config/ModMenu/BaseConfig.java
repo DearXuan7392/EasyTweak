@@ -4,51 +4,41 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 
 public class BaseConfig {
 
     public BaseConfig(){}
 
-    private transient String[] Matchs = null;
+    private transient HashMap<String, ConfigDesc> ConfigDescHashMap = null;
 
+    /**
+     * 是否应该注入该Mixin类
+     */
     public boolean shouldApply(String mixinClassFullname){
-        try{
-            if(Matchs == null){
-                Matchs = getAllMatches();
+        for(ConfigDesc configDesc : getAllConfigDesc().values()){
+            if(configDesc.canApply(mixinClassFullname)){
+                return true;
             }
-            for(String pattern : Matchs){
-                if(Support.isMatch(mixinClassFullname, pattern)){
-                    return true;
-                }
-            }
-            return false;
-        }catch (Exception e){
-            ModInfo.LOGGER.error(e);
-            return false;
         }
-
+        return false;
     }
 
-    private String[] getAllMatches() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<ConfigDesc> configDescList = getConfigDesc();
-        HashSet<String> matches = new HashSet<>();
-        matches.add(ModInfo.PackageName + ".mixin.Debug.*");
-        for(ConfigDesc configDesc : configDescList){
-            // 仅当配置不是默认值或测试字段才启用 Mixin
-            if(!configDesc.DefaultValue.equals(configDesc.Value)){
-                for(String mixinClass : configDesc.MixinClassName){
-                    // 匹配 com.dearxuan.modid.mixin*.mixinClass
-                    matches.add(ModInfo.PackageName + ".mixin*" + mixinClass);
-                }
-                for(String mixinPackage : configDesc.MixinPackage){
-                    // 匹配 com.dearxuan.modid.mixin.mixinPackage.*
-                    matches.add(ModInfo.PackageName + ".mixin." + mixinPackage + ".*");
-                }
-            }
+    public HashMap<String, ConfigDesc> getAllConfigDesc() {
+        if(this.ConfigDescHashMap != null){
+            return this.ConfigDescHashMap;
         }
-        return matches.toArray(new String[]{});
+        this.ConfigDescHashMap = new HashMap<>();
+        try{
+            List<ConfigDesc> configDescList = getConfigDesc();
+            for (ConfigDesc configDesc : configDescList){
+                this.ConfigDescHashMap.put(configDesc.Fullname, configDesc);
+            }
+        }catch (Exception e){
+            ModInfo.LOGGER.error(e);
+        }
+        return this.ConfigDescHashMap;
     }
 
     private List<ConfigDesc> getConfigDesc() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {

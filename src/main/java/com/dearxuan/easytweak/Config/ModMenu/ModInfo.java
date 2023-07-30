@@ -30,11 +30,11 @@ public class ModInfo {
         ModSaver.InitModConfig(ConfigClass);
     }
 
-    public static Object getInstance() throws NoSuchFieldException, IllegalAccessException {
-        return ConfigClass.getField("INSTANCE").get(null);
+    public static BaseConfig getInstance() throws NoSuchFieldException, IllegalAccessException {
+        return (BaseConfig) ConfigClass.getField("INSTANCE").get(null);
     }
 
-    public static void setInstance(Object obj) throws NoSuchFieldException, IllegalAccessException {
+    public static void setInstance(BaseConfig obj) throws NoSuchFieldException, IllegalAccessException {
         ConfigClass.getField("INSTANCE").set(null, obj);
     }
 

@@ -95,8 +95,7 @@ public abstract class Property implements Comparable<Property> {
 
   @Override
   public boolean equals(Object other) {
-    if (other instanceof Property) {
-      Property p = (Property) other;
+    if (other instanceof Property p) {
       return getName().equals(p.getName()) && getType().equals(p.getType());
     }
     return false;

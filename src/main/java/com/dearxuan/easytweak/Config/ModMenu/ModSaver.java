@@ -27,7 +27,7 @@ public class ModSaver {
 
             // 尝试读取配置, 若失败, 则使用默认配置
             if (!ReadFromYaml()) {
-                ModInfo.setInstance(ConfigClass.getDeclaredConstructor().newInstance());
+                ModInfo.setInstance((BaseConfig) ConfigClass.getDeclaredConstructor().newInstance());
             }
             // 覆盖原配置文件, 防止mod升级后新增的配置无法写入
             WriteToYaml();
@@ -70,7 +70,7 @@ public class ModSaver {
         try {
             String yamlString = new String(Files.readAllBytes(ModInfo.ConfigurationFilePath));
             Yaml yaml = new Yaml();
-            ModInfo.setInstance(yaml.loadAs(yamlString, ConfigClass));
+            ModInfo.setInstance((BaseConfig) yaml.loadAs(yamlString, ConfigClass));
             return true;
         } catch (Exception e) {
             return false;

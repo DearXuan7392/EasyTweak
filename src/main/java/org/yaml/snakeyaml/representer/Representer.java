@@ -191,11 +191,10 @@ public class Representer extends SafeRepresenter {
             }
           }
         }
-      } else if (object instanceof Set) {
+      } else if (object instanceof Set<?> set) {
         Class<?> t = arguments[0];
         MappingNode mnode = (MappingNode) node;
         Iterator<NodeTuple> iter = mnode.getValue().iterator();
-        Set<?> set = (Set<?>) object;
         for (Object member : set) {
           NodeTuple tuple = iter.next();
           Node keyNode = tuple.getKeyNode();

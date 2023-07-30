@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.BetterSpawner;
+package com.dearxuan.easytweak.mixin.BetterSpawner.SpawnerEnchantment;
 
 import com.dearxuan.easytweak.Interface.MobSpawnerInterface;
 import net.minecraft.block.Block;

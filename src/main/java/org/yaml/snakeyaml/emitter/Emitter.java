@@ -364,8 +364,7 @@ public final class Emitter implements Emitable {
     }
 
     public void expect() throws IOException {
-      if (event instanceof DocumentStartEvent) {
-        DocumentStartEvent ev = (DocumentStartEvent) event;
+      if (event instanceof DocumentStartEvent ev) {
         if ((ev.getVersion() != null || ev.getTags() != null) && openEnded) {
           writeIndicator("...", true, false, false);
           writeIndent();
@@ -834,8 +833,7 @@ public final class Emitter implements Emitable {
       return false;
     }
     Event event = events.peek();
-    if (event instanceof ScalarEvent) {
-      ScalarEvent e = (ScalarEvent) event;
+    if (event instanceof ScalarEvent e) {
       return e.getAnchor() == null && e.getTag() == null && e.getImplicit() != null
           && e.getValue().length() == 0;
     }

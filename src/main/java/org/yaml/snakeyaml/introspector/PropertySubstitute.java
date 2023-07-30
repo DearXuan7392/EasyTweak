@@ -80,13 +80,11 @@ public class PropertySubstitute extends Property {
       if (!filler) {
         write.invoke(object, value);
       } else if (value != null) {
-        if (value instanceof Collection<?>) {
-          Collection<?> collection = (Collection<?>) value;
+        if (value instanceof Collection<?> collection) {
           for (Object val : collection) {
             write.invoke(object, val);
           }
-        } else if (value instanceof Map<?, ?>) {
-          Map<?, ?> map = (Map<?, ?>) value;
+        } else if (value instanceof Map<?, ?> map) {
           for (Entry<?, ?> entry : map.entrySet()) {
             write.invoke(object, entry.getKey(), entry.getValue());
           }

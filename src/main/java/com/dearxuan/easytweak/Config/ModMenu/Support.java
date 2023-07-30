@@ -2,6 +2,8 @@ package com.dearxuan.easytweak.Config.ModMenu;
 
 public class Support {
 
+    public static final String[] StringsEmpty = new String[]{};
+
     /**
      * 判断字符串是否匹配
      */

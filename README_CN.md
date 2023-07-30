@@ -69,10 +69,10 @@ CommandReg:
 Enchantment:
   # 禁用附魔冲突, 但是时运与精准采集仍然冲突
   Disable_Enchantments_Conflict: false
-  # 弓的附魔对弩生效
-  Share_Enchantments_To_Crossbow: false
-  # 附魔无限的武器将不再消耗任何类型的箭矢, 同时背包中无需拥有至少一根箭
+  # 附魔无限的武器将不再消耗任何箭矢, 同时背包中无需拥有一根箭
   Real_Infinity: false
+  # 弓的附魔对弩生效
+  Better_Crossbow: false
   # 限制铁砧的最大附魔花费为39
   Never_Expensive: false
   # 附魔经验修补的工具将直接使用玩家经验进行修复
@@ -107,5 +107,4 @@ Recipes:
   Enchanted_Golden_Apple: false
   # 4 x 紫水晶块 = 紫水晶母岩
   Budding_Amethyst: false
-
 ```

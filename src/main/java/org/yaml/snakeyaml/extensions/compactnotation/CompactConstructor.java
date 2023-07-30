@@ -151,14 +151,12 @@ public class CompactConstructor extends Constructor {
 
   @Override
   protected Construct getConstructor(Node node) {
-    if (node instanceof MappingNode) {
-      MappingNode mnode = (MappingNode) node;
+    if (node instanceof MappingNode mnode) {
       List<NodeTuple> list = mnode.getValue();
       if (list.size() == 1) {
         NodeTuple tuple = list.get(0);
         Node key = tuple.getKeyNode();
-        if (key instanceof ScalarNode) {
-          ScalarNode scalar = (ScalarNode) key;
+        if (key instanceof ScalarNode scalar) {
           if (GUESS_COMPACT.matcher(scalar.getValue()).matches()) {
             return getCompactConstruct();
           }
@@ -201,9 +199,8 @@ public class CompactConstructor extends Constructor {
      */
     public Object construct(Node node) {
       ScalarNode tmpNode;
-      if (node instanceof MappingNode) {
+      if (node instanceof MappingNode mnode) {
         // Compact Object Notation may contain only one entry
-        MappingNode mnode = (MappingNode) node;
         NodeTuple nodeTuple = mnode.getValue().iterator().next();
         node.setTwoStepsConstruction(true);
         tmpNode = (ScalarNode) nodeTuple.getKeyNode();

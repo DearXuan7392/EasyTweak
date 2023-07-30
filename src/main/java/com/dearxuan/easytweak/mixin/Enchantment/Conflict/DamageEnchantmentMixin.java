@@ -25,8 +25,7 @@ public class DamageEnchantmentMixin extends Enchantment{
      */
     @Override
     public boolean canAccept(Enchantment other){
-        if(other instanceof DamageEnchantment){
-            DamageEnchantment damageEnchantment = (DamageEnchantment) other;
+        if(other instanceof DamageEnchantment damageEnchantment){
             return damageEnchantment.typeIndex != this.typeIndex;
         }else{
             return true;

@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.BetterSpawner;
+package com.dearxuan.easytweak.mixin.BetterSpawner.SpawnerEnchantment;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;

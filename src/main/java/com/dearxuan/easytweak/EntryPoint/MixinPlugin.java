@@ -20,7 +20,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
                 "easytweak",
                 ModConfig.class,
                 Main.DEBUG);
-
     }
 
     @Override

@@ -1,8 +1,8 @@
-package com.dearxuan.easytweak.mixin.Enchantment.SharedEnchanting;
+package com.dearxuan.easytweak.mixin.Enchantment.BetterCrossbow;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.enchantment.PunchEnchantment;
+import net.minecraft.enchantment.InfinityEnchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -11,16 +11,16 @@ import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * 冲击
+ * 无限
  */
-@Mixin(PunchEnchantment.class)
-public abstract class PunchEnchantmentMixin extends Enchantment {
+@Mixin(InfinityEnchantment.class)
+public class InfinityEnchantmentMixin extends Enchantment{
 
-    protected PunchEnchantmentMixin(Rarity weight, EnchantmentTarget target, EquipmentSlot[] slotTypes) {
-        super(weight, target, slotTypes);
+    public InfinityEnchantmentMixin(Rarity weight, EquipmentSlot... slotTypes) {
+        super(weight, EnchantmentTarget.BOW, slotTypes);
+
     }
 
-    @Override
     public boolean isAcceptableItem(ItemStack stack){
         Item item = stack.getItem();
         return item instanceof BowItem || item instanceof CrossbowItem;

@@ -32,7 +32,7 @@ GameRule:
 #     1. Spawners can be mined, but they no longer drop XP. 
 #        Instead, they drop the spawn egg inside;
 #     2. Right-clicking a spawner with a spawn egg will replace the original spawn egg with the one in your hand, 
-#        and the spawn egg inside will drop;
+#and the spawn egg inside will drop;
 #     3. Placing a torch or soul torch on the spawner will disable it;
 #     4. When a spawner receive redstone power, it will continuously spawn mobs regardless of player proximity;
 #     5. There is a chance for mobs to drop their spawn egg when player kill him. The initial chance is 1%. 
@@ -61,10 +61,10 @@ CommandReg:
 Enchantment:
   # Silk touch still conflicts with Fortune.
   Disable_Enchantments_Conflict: false
-  # Enchantments of the bow are still work on crossbow.
-  Share_Enchantments_To_Crossbow: false
   # Bow or crossbow with Infinite do not need arrows in the backpack to be used.
   Real_Infinity: false
+  # Enchantments of the bow are still work on crossbow.
+  Better_Crossbow: false
   # The max cost in anvil is 39.
   Never_Expensive: false
   # The tool with Mending will directly deduct XP instead of durability.
@@ -89,5 +89,4 @@ Recipes:
   Enchanted_Golden_Apple: false
   # 4 x Amethyst Block = Budding Amethyst
   Budding_Amethyst: false
-
 ```

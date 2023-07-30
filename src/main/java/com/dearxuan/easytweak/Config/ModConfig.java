@@ -47,6 +47,12 @@ public class ModConfig extends BaseConfig {
          */
         @EasyConfig(mixin = "FireBallEntityMixin")
         public boolean Disable_Ghast_Griefing = false;
+
+        /**
+         * 禁用僵尸破门
+         */
+        @EasyConfig(mixin = "ZombieEntityMixin")
+        public boolean Disable_Zombie_Break_Door = false;
     }
 
     /**
@@ -106,53 +112,61 @@ public class ModConfig extends BaseConfig {
         /**
          * 刷怪笼强化
          */
-        @EasyConfig(mixinPackage = "BetterSpawner")
+        @EasyConfig(mixinPackage = "BetterSpawner.SpawnerEnchantment")
         public boolean Enable = false;
 
         /**
          * 刷怪笼激活距离
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Player_Range = 16;
 
         /**
          * 刷怪笼附近最大实体数量
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Max_Nearby = 6;
 
         /**
          * 下次刷怪的最小等待时间
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Min_Delay = 200;
 
         /**
          * 下次刷怪的最大等待时间
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Max_Delay = 800;
 
         /**
          * 刷怪方形区域边长, 范围是正方形
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Spawner_Range = 8;
 
         /**
          * 刷怪高度
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Spawner_Height = 3;
 
         /**
          * 每次生成的怪物数量
          */
+        @EasyConfig(mixinPackage = "BetterSpawner.CustomRules")
         public int Spawner_Count = 4;
 
         /**
          * 取消光照限制
          */
-        @EasyConfig(mixin = {"HostileEntityMixin"})
+        @EasyConfig(mixinPackage = {"BetterSpawner.DisableLimit.LightLimit"})
         public boolean Disable_Light_Restriction = false;
 
         /**
          * 取消流体限制
          */
+        @EasyConfig(mixinPackage = {"BetterSpawner.DisableLimit.FluidLimit"})
         public boolean Disable_Fluid_Restriction = false;
     }
 
@@ -179,16 +193,16 @@ public class ModConfig extends BaseConfig {
         public boolean Disable_Enchantments_Conflict = false;
 
         /**
-         * 弓的附魔对弩有效
-         */
-        @EasyConfig(mixinPackage = "Enchantment.SharedEnchanting")
-        public boolean Share_Enchantments_To_Crossbow = false;
-
-        /**
-         * 附魔无限的弓和弩不再需要背包中拥有箭, 药水箭也不会减少
+         * 附魔无限的弓(或弩)不再需要背包拥有箭, 同时特殊箭矢不会减少
          */
         @EasyConfig(mixinPackage = "Enchantment.RealInfinity")
         public boolean Real_Infinity = false;
+
+        /**
+         * 弓的附魔对弩生效
+         */
+        @EasyConfig(mixinPackage = "Enchantment.BetterCrossbow")
+        public boolean Better_Crossbow = false;
 
         /**
          * 不再出现过于昂贵提示, 附魔最大经验值为39
@@ -264,12 +278,6 @@ public class ModConfig extends BaseConfig {
          */
         @EasyConfig(mixin = "CreeperEntityMixin")
         public boolean Creeper_Attack_Snow_Golem = false;
-
-        /**
-         * 禁用僵尸破门
-         */
-        @EasyConfig(mixin = "")
-        public boolean Disable_Zombie_Break_Door = false;
     }
 
     public static class RECIPES extends BaseConfig {

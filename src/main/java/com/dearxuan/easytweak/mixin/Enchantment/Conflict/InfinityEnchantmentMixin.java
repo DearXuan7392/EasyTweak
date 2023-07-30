@@ -4,10 +4,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.InfinityEnchantment;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
@@ -27,11 +23,5 @@ public class InfinityEnchantmentMixin extends Enchantment{
     @Override
     public boolean canAccept(Enchantment other) {
         return super.canAccept(other);
-    }
-
-
-    public boolean isAcceptableItem(ItemStack stack){
-        Item item = stack.getItem();
-        return item instanceof BowItem || item instanceof CrossbowItem;
     }
 }

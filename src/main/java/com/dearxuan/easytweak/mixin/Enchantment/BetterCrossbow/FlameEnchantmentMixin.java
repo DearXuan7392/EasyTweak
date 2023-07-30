@@ -1,4 +1,4 @@
-package com.dearxuan.easytweak.mixin.Enchantment.SharedEnchanting;
+package com.dearxuan.easytweak.mixin.Enchantment.BetterCrossbow;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
