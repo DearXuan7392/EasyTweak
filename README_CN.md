@@ -19,6 +19,8 @@ MobGriefing:
   Disable_Creeper_Griefing: false
   # 禁用恶魂破坏方块
   Disable_Ghast_Griefing: false
+  # 禁用僵尸破门
+  Disable_Zombie_Break_Door: false
 # 游戏规则
 GameRule:
   # 禁用传送门生成僵尸猪人
@@ -99,8 +101,6 @@ MobActivity:
   Disable_Piglin_Zombify: false
   # 苦力怕主动攻击雪傀儡
   Creeper_Attack_Snow_Golem: false
-  # 禁用僵尸破门
-  Disable_Zombie_Break_Door: false
 # 配方
 Recipes:
   # 8 x 金块 + 1 x 苹果 = 附魔金苹果

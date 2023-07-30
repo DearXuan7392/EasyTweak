@@ -15,6 +15,7 @@ MobGriefing:
   Disable_Enderman_Pick_Up: false
   Disable_Creeper_Griefing: false
   Disable_Ghast_Griefing: false
+  Disable_Zombie_Break_Door: false
 GameRule:
   Disable_Nether_Portal_Spawning_Zombified_Piglin: false
   Disable_Bat_Spawning: false
@@ -36,7 +37,7 @@ GameRule:
 #     3. Placing a torch or soul torch on the spawner will disable it;
 #     4. When a spawner receive redstone power, it will continuously spawn mobs regardless of player proximity;
 #     5. There is a chance for mobs to drop their spawn egg when player kill him. The initial chance is 1%. 
-#        "Fortune" enchantment can increase the chance to 5%, 10%, 15%. (5% × level);
+#        "Looting" enchantment can increase the chance to 5%, 10%, 15%. (5% × level);
 BetterSpawner:
   # Only when this item is set to true, will the other modifications take effect
   Enable: false
@@ -83,7 +84,6 @@ LootTable:
 MobActivity:
   Disable_Piglin_Zombify: false
   Creeper_Attack_Snow_Golem: false
-  Disable_Zombie_Break_Door: false
 Recipes:
   # 8 x Gold block + 1 x Apple = Enchanted Golden Apple
   Enchanted_Golden_Apple: false
