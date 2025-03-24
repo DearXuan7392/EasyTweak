@@ -3,10 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
 version = project.mod_version
 group = project.maven_group
 

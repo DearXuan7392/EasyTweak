@@ -22,5 +22,4 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity {
     public boolean shouldZombify() {
         return false;
     }
-
 }

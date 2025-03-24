@@ -44,7 +44,7 @@ public class DataGenerationEntrypoint implements DataGeneratorEntrypoint {
         public void generate(Consumer<RecipeJsonProvider> exporter) {
             // 附魔金苹果
             ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD,
-                    Items.ENCHANTED_GOLDEN_APPLE)
+                            Items.ENCHANTED_GOLDEN_APPLE)
                     .pattern("III")
                     .pattern("IAI")
                     .pattern("III")
@@ -61,7 +61,7 @@ public class DataGenerationEntrypoint implements DataGeneratorEntrypoint {
 
             // 紫水晶母岩
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS,
-                    Items.BUDDING_AMETHYST)
+                            Items.BUDDING_AMETHYST)
                     .pattern("##")
                     .pattern("##")
                     .input('#', Items.AMETHYST_BLOCK)

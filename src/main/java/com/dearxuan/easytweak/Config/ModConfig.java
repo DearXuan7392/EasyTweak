@@ -7,6 +7,8 @@ public class ModConfig extends BaseConfig {
 
     public static ModConfig INSTANCE;
 
+    public boolean DEBUG = false;
+
     public MOB_GRIEFING MobGriefing = new MOB_GRIEFING();
 
     public GAME_RULE GameRule = new GAME_RULE();
@@ -278,6 +280,13 @@ public class ModConfig extends BaseConfig {
          */
         @EasyConfig(mixin = "CreeperEntityMixin")
         public boolean Creeper_Attack_Snow_Golem = false;
+    }
+
+    /**
+     * 玩家管理
+     */
+    public static class Player extends BaseConfig {
+
     }
 
     public static class RECIPES extends BaseConfig {

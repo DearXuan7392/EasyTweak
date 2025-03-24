@@ -1,5 +1,6 @@
 package com.dearxuan.easytweak.mixin.Recipe;
 
+import com.dearxuan.easytweak.Config.ModMenu.ModInfo;
 import com.dearxuan.easytweak.Event.Recipe;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementManager;

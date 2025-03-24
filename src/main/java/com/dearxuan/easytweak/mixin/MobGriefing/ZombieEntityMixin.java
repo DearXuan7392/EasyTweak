@@ -6,6 +6,9 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ZombieEntity.class)
 public abstract class ZombieEntityMixin extends HostileEntity {
@@ -13,12 +16,12 @@ public abstract class ZombieEntityMixin extends HostileEntity {
         super(entityType, world);
     }
 
-    /**
-     * @author DearXuan
-     * @reason 禁用僵尸及继承自僵尸的生物破门
-     */
-    @Overwrite
-    public boolean canBreakDoors() {
-        return false;
+    @Inject(
+            method = "canBreakDoors",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void canBreakDoor(CallbackInfoReturnable<Boolean> info){
+        info.setReturnValue(false);
     }
 }

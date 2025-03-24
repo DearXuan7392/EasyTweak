@@ -1,10 +1,12 @@
 package com.dearxuan.easytweak.mixin.Enchantment;
 
+import com.dearxuan.easytweak.Config.ModMenu.ModInfo;
 import net.fabricmc.fabric.api.item.v1.FabricItemStack;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.UnbreakingEnchantment;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.random.Random;
@@ -12,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements FabricItemStack {
@@ -19,67 +24,46 @@ public abstract class ItemStackMixin implements FabricItemStack {
     @Shadow
     public abstract boolean isDamageable();
 
+    @Shadow public abstract int getDamage();
+
+    @Shadow public abstract void setDamage(int damage);
+
+    @Shadow public abstract int getMaxDamage();
+
     private int nextAdditionExperience = 1;
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean damage(int amount, Random random, @Nullable ServerPlayerEntity player) {
-        if (!this.isDamageable()) {
-            return false;
-        } else {
-            ItemStack _this = (ItemStack) (Object)this;
-            int i;
-            if (amount > 0) {
-                i = EnchantmentHelper.getLevel(Enchantments.UNBREAKING, _this);
-                int j = 0;
-
-                for(int k = 0; i > 0 && k < amount; ++k) {
-                    if (UnbreakingEnchantment.shouldPreventDamage(_this, i, random)) {
-                        ++j;
-                    }
-                }
-
-                amount -= j;
-                if (amount <= 0) {
-                    return false;
-                }
+    @Inject(
+            method = "damage(ILnet/minecraft/util/math/random/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z",
+            at = @At(value = "RETURN"),
+            cancellable = true
+    )
+    private void Better_Mending(
+            int amount,
+            Random random,
+            ServerPlayerEntity player,
+            CallbackInfoReturnable<Boolean> info){
+        if(!this.isDamageable()){
+            return;
+        }
+        int damage = this.getDamage();
+        if(damage > 0 && player != null && player.totalExperience > 0 && EnchantmentHelper.getLevel(Enchantments.MENDING, (ItemStack) (Object) this) > 0){
+            // 修复所需的经验值
+            int needExp = damage / 2;
+            // 如果损耗值是奇数, 则两次中有一次需要将经验值加一, 以匹配原版规则
+            if(damage % 2 == 1){
+                needExp += nextAdditionExperience;
+                nextAdditionExperience = 1 - nextAdditionExperience;
             }
-
-            // 上次损耗值
-            int lastDamage = _this.getDamage();
-            // 此时 i 是该物品算上本次损耗的总共损耗值
-            i = lastDamage + amount;
-            // 实际修复值
-            int actualRepair = 0;
-            if(player != null){
-                // 进行经验修补
-                if(EnchantmentHelper.getLevel(Enchantments.MENDING, _this) > 0){
-                    // 如果经验不足, 则不修复
-                    actualRepair = Math.min(i, player.totalExperience * 2);
-                    // 实际修复值 > 0
-                    if(actualRepair > 0){
-                        // 如果经验是单数, 为了与原版匹配, 每两次为奇数时才会扣除一次经验
-                        if(actualRepair % 2 == 1){
-                            actualRepair += nextAdditionExperience;
-                            nextAdditionExperience = -nextAdditionExperience;
-                        }
-                        // 扣除经验
-                        player.addExperience(- ((actualRepair + 1) / 2));
-
-                    }
-                }
-
-                // 经验修补结束
-                if(lastDamage != _this.getDamage()){
-                    Criteria.ITEM_DURABILITY_CHANGED.trigger(player, _this, _this.getDamage() + amount);
-                }
+            if(needExp < player.totalExperience){
+                // 玩家拥有足够的经验
+                this.setDamage(0);
+                player.addExperience(-needExp);
+            }else{
+                // 玩家经验恰好足够或不足
+                this.setDamage(damage - player.totalExperience * 2);
+                player.setExperiencePoints(0);
             }
-            // 更新损耗值
-            _this.setDamage(i - actualRepair);
-            return i >= _this.getMaxDamage();
+            info.setReturnValue(this.getDamage() >= this.getMaxDamage());
         }
     }
 }

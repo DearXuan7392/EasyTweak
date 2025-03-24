@@ -91,6 +91,9 @@ public class LootTable {
         table.pool(builder);
     }
 
+    /**
+     * 凋零骷髅在自然死亡时仍会掉落凋零头颅
+     */
     private void Add_Wither_Skeleton(
             ResourceManager resourceManager,
             LootManager lootManager,
