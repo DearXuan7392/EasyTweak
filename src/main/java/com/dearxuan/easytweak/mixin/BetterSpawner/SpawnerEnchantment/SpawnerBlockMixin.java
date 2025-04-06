@@ -1,19 +1,10 @@
 package com.dearxuan.easytweak.mixin.BetterSpawner.SpawnerEnchantment;
 
-import com.dearxuan.easytweak.Event.MobSpawnerEvent;
-import com.dearxuan.easytweak.Interface.MobSpawnerInterface;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.SpawnerBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.MobSpawnerBlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.function.BooleanSupplier;
 
@@ -35,45 +26,41 @@ public abstract class SpawnerBlockMixin extends BlockWithEntity {
     }
 
     /**
-     * @author DearXuan
-     * @reason 不再掉落经验
+     * 不再掉落经验
+     * @param dropExperience
+     * @return
      */
-    @Overwrite
-    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
-        super.onStacksDropped(state, world, pos, tool, false);
+    @ModifyVariable(
+            method = "onStacksDropped",
+            at = @At("HEAD"),
+            ordinal = 0
+    )
+    private boolean modifyDropExperience(boolean dropExperience){
+        return false;
     }
 
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if(!state.isOf(newState.getBlock())){
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if(blockEntity instanceof MobSpawnerBlockEntity mobSpawnerBlockEntity){
-                MobSpawnerEvent.DropEgg(world, pos, mobSpawnerBlockEntity);
-            }
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
+//    @Override
+//    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+//        if(!state.isOf(newState.getBlock())){
+//            BlockEntity blockEntity = world.getBlockEntity(pos);
+//            if(blockEntity instanceof MobSpawnerBlockEntity mobSpawnerBlockEntity){
+//                MobSpawnerEvent.DropEgg(world, pos, mobSpawnerBlockEntity);
+//            }
+//        }
+//        super.onStateReplaced(state, world, pos, newState, moved);
+//    }
 
-    /**
-     * @author DearXuan
-     * @reason 创建实体时, 更新实体状态
-     */
-    @Overwrite
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new MobSpawnerBlockEntity(pos, state);
-    }
-
-    @Override
-    public void neighborUpdate(
-            BlockState state,
-            World world,
-            BlockPos pos,
-            Block sourceBlock,
-            BlockPos sourcePos,
-            boolean notify) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if(blockEntity instanceof MobSpawnerInterface mobSpawnerInterface){
-            mobSpawnerInterface.updateState(world, pos);
-        }
-    }
+//    @Override
+//    public void neighborUpdate(
+//            BlockState state,
+//            World world,
+//            BlockPos pos,
+//            Block sourceBlock,
+//            BlockPos sourcePos,
+//            boolean notify) {
+//        BlockEntity blockEntity = world.getBlockEntity(pos);
+//        if(blockEntity instanceof MobSpawnerInterface mobSpawnerInterface){
+//            mobSpawnerInterface.updateState(world, pos);
+//        }
+//    }
 }

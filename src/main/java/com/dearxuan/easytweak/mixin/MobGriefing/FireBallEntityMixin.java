@@ -16,6 +16,11 @@ public abstract class FireBallEntityMixin extends AbstractFireballEntity {
         super(entityType, world);
     }
 
+    /**
+     * 火球不再破坏方块
+     * @param explosionSourceType
+     * @return
+     */
     @ModifyArg(
             method = "onCollision",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFZLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"),

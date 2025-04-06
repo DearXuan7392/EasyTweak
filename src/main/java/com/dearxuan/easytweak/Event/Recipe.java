@@ -5,6 +5,7 @@ import com.dearxuan.easytweak.Config.ModMenu.ModInfo;
 import com.dearxuan.easytweak.EntryPoint.Main;
 import com.google.gson.JsonElement;
 import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.item.Item;
@@ -86,8 +87,7 @@ public class Recipe {
                     .criterion(
                             ModInfo.ModId + "_get_" + identifier.getPath(),
                             InventoryChangedCriterion.Conditions.items(needToUnlock))
-                    .build(identifier)
-                    .createTask();
+                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
             AdvancementsMap.put(identifier, builder);
             ModInfo.LOGGER.debug("Adding Advancement: " + identifier.getPath());
         } catch (Exception e) {

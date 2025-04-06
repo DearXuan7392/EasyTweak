@@ -1,34 +1,44 @@
 package com.dearxuan.easytweak.mixin.BetterSpawner.SpawnerEnchantment;
 
-import com.dearxuan.easytweak.Interface.MobSpawnerInterface;
+import net.minecraft.block.spawner.MobSpawnerLogic;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.MobSpawnerLogic;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobSpawnerLogic.class)
-public abstract class MobSpawnerLogicMixin implements MobSpawnerInterface {
-    @Shadow
-    protected abstract boolean isPlayerInRange(World world, BlockPos pos);
+public abstract class MobSpawnerLogicMixin {
 
-    private boolean IsReceiveRedstonePower = false;
+    /**
+     * 是否需要更新刷怪笼状态. 仅在第一次 tick 时修改, 判断是否有红石充能
+     */
+    @Unique
+    private boolean NeedUpdateBlockState = true;
 
-    @Override
-    public void updateState(boolean isReceiveRedstonePower){
-        this.IsReceiveRedstonePower = isReceiveRedstonePower;
-    }
+    /**
+     * 是否接收到红石信号
+     */
+    @Unique
+    private boolean IsReceivingRedstonePower = false;
 
-    @Redirect(
+    /**
+     * 是否启用该刷怪笼
+     */
+    @Unique
+    private boolean Enable = false;
+
+    @Inject(
             method = "serverTick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/MobSpawnerLogic;isPlayerInRange(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z")
+            at = @At("HEAD"),
+            cancellable = true
     )
-    private boolean isPlayerInRangeOrPowered(
-            MobSpawnerLogic instance,
-            World world,
-            BlockPos pos){
-        return this.IsReceiveRedstonePower || this.isPlayerInRange(world, pos);
+    private void injectServerTick(ServerWorld world, BlockPos pos, CallbackInfo info){
+        if (this.NeedUpdateBlockState){
+            this.IsReceivingRedstonePower = world.isReceivingRedstonePower(pos);
+            this.NeedUpdateBlockState = false;
+        }
     }
 }

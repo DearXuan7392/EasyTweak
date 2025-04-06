@@ -26,6 +26,11 @@ public abstract class ServerPlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
+    /**
+     * 死亡掉落玩家头颅
+     * @param damageSource
+     * @param info
+     */
     @Inject(
             method = "onDeath",
             at = @At("RETURN")

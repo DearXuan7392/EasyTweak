@@ -18,6 +18,11 @@ public abstract class CreeperEntityMixin extends HostileEntity implements SkinOv
         super(entityType, world);
     }
 
+    /**
+     * 苦力怕不再破坏方块
+     * @param explosionSourceType
+     * @return
+     */
     @ModifyArg(
             method = "explode",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"),

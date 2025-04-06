@@ -7,6 +7,9 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractPiglinEntity.class)
 public abstract class AbstractPiglinEntityMixin extends HostileEntity {
@@ -18,8 +21,13 @@ public abstract class AbstractPiglinEntityMixin extends HostileEntity {
      * @author DearXuan
      * @reason 移除猪灵僵尸化代码
      */
-    @Overwrite
-    public boolean shouldZombify() {
-        return false;
+    @Inject(
+            method = "shouldZombify",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void injectShouldZombify(CallbackInfoReturnable<Boolean> cir){
+        cir.setReturnValue(false);
+        cir.cancel();
     }
 }

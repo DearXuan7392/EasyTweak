@@ -16,6 +16,10 @@ public abstract class ZombieEntityMixin extends HostileEntity {
         super(entityType, world);
     }
 
+    /**
+     * 僵尸不再破门
+     * @param info
+     */
     @Inject(
             method = "canBreakDoors",
             at = @At("RETURN"),
@@ -23,5 +27,6 @@ public abstract class ZombieEntityMixin extends HostileEntity {
     )
     private void canBreakDoor(CallbackInfoReturnable<Boolean> info){
         info.setReturnValue(false);
+        info.cancel();
     }
 }

@@ -18,6 +18,10 @@ public abstract class CreeperEntityMixin extends HostileEntity implements SkinOv
         super(entityType, world);
     }
 
+    /**
+     * 苦力怕主动攻击雪傀儡
+     * @param info
+     */
     @Inject(
             method = "initGoals",
             at = @At("RETURN")

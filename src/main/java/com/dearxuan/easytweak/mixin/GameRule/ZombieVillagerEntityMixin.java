@@ -15,6 +15,11 @@ public abstract class ZombieVillagerEntityMixin extends ZombieEntity implements 
         super(entityType, world);
     }
 
+    /**
+     * 加速僵尸村民转换
+     * @param original
+     * @return
+     */
     @ModifyConstant(
             method = "interactMob",
             constant = @Constant(intValue = 2401)

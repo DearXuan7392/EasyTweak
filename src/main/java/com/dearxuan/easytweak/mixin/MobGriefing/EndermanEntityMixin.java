@@ -9,6 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(targets = "net.minecraft.entity.mob.EndermanEntity$PickUpBlockGoal")
 public abstract class EndermanEntityMixin extends Goal {
 
+    /**
+     * 末影人不再搬运方块
+     * @param info
+     */
     @Inject(
             method = "canStart",
             at = @At("HEAD"),
@@ -16,5 +20,6 @@ public abstract class EndermanEntityMixin extends Goal {
     )
     public void canStart(CallbackInfoReturnable<Boolean> info){
         info.setReturnValue(false);
+        info.cancel();
     }
 }

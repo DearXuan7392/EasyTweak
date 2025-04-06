@@ -7,6 +7,9 @@ import net.minecraft.entity.EquipmentSlot;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * 锋利, 亡灵杀手, 节肢杀手
@@ -22,13 +25,20 @@ public class DamageEnchantmentMixin extends Enchantment{
 
     /**
      * 锋利, 亡灵杀手, 节肢杀手 不再冲突
+     * @param other
+     * @param cir
      */
-    @Override
-    public boolean canAccept(Enchantment other){
-        if(other instanceof DamageEnchantment damageEnchantment){
-            return damageEnchantment.typeIndex != this.typeIndex;
-        }else{
-            return true;
+    @Inject(
+            method = "canAccept",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void injectCanAccept(Enchantment other, CallbackInfoReturnable<Boolean> cir){
+        if (other instanceof DamageEnchantment damageEnchantment){
+            cir.setReturnValue(damageEnchantment.typeIndex != typeIndex);
+        } else {
+            cir.setReturnValue(true);
         }
+        cir.cancel();
     }
 }

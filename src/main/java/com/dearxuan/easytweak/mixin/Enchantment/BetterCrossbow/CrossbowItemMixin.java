@@ -1,6 +1,7 @@
 package com.dearxuan.easytweak.mixin.Enchantment.BetterCrossbow;
 
 import com.dearxuan.easytweak.Config.ModConfig;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -22,15 +23,21 @@ public abstract class CrossbowItemMixin extends RangedWeaponItem  implements Van
         super(settings);
     }
 
-    @ModifyVariable(
-            method = "loadProjectiles",
-            at = @At("STORE"),
-            ordinal = 0
-    )
-    private static boolean loadProjectiles_bl(boolean bl, LivingEntity shooter, ItemStack crossbow) {
-        return bl || EnchantmentHelper.getLevel(Enchantments.INFINITY, crossbow) > 0;
-    }
-
+    /**
+     *  对 弩 计算附魔伤害
+     * @param projectileEntity
+     * @param world
+     * @param shooter
+     * @param hand
+     * @param crossbow
+     * @param projectile
+     * @param soundPitch
+     * @param creative
+     * @param speed
+     * @param divergence
+     * @param simulated
+     * @return
+     */
     @ModifyVariable(
             method = "shoot",
             at = @At("TAIL"),
@@ -66,22 +73,5 @@ public abstract class CrossbowItemMixin extends RangedWeaponItem  implements Van
             }
         }
         return projectileEntity;
-    }
-
-    @Redirect(
-            method = "use",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getProjectileType(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/ItemStack;")
-    )
-    private ItemStack use_getProjectileType(PlayerEntity instance, ItemStack stack){
-        if(ModConfig.INSTANCE.Enchantment.Real_Infinity){
-            ItemStack res = instance.getProjectileType(stack);
-            if(res.isEmpty() && EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0){
-                res = new ItemStack(Items.ARROW);
-            }
-            return res;
-        }else{
-            return instance.getProjectileType(stack);
-        }
-
     }
 }

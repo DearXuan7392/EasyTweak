@@ -20,10 +20,7 @@ public abstract class PowerEnchantmentMixin extends Enchantment {
         super(weight, target, slotTypes);
     }
 
-    /**
-     * @author
-     * @reason
-     */
+
     @Override
     public boolean isAcceptableItem(ItemStack stack){
         Item item = stack.getItem();

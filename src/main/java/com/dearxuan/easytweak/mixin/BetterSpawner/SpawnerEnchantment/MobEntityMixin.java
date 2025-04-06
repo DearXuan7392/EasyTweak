@@ -27,11 +27,18 @@ public abstract class MobEntityMixin extends LivingEntity implements Targeter {
         super(entityType, world);
     }
 
+    /**
+     * 随机掉落生物蛋
+     * @param damageSource
+     * @param causedByPlayer
+     * @param info
+     */
     @Inject(
             method = "dropLoot",
             at = @At("HEAD")
     )
     private void dropLoot(DamageSource damageSource, boolean causedByPlayer, CallbackInfo info){
+        // 仅在玩家击杀时触发
         if(damageSource.getAttacker() instanceof PlayerEntity player){
             // 获取抢夺附魔等级
             int level = EnchantmentHelper.getLevel(Enchantments.LOOTING, player.getMainHandStack());
@@ -40,8 +47,10 @@ public abstract class MobEntityMixin extends LivingEntity implements Targeter {
             if(level == 0){
                 level = 1;
             }else{
-                level *= 5;
+                level *= 3;
             }
+            // 按照一定的概率掉落生物蛋
+            // 附魔等级: 0, 1, 2, 3. 掉落概率: 1%, 3%, 6%, 9%
             if(random < level){
                 MobEntity mobEntity = (MobEntity) (Object) this;
                 ServerWorld world = (ServerWorld) mobEntity.getEntityWorld();
